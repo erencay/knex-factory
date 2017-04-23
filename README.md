@@ -1,7 +1,7 @@
 # knex-factory
 
 ### Install
-`npm i -S knex-factory`
+`npm i -D knex-factory`
 
 ## Usage
 
