@@ -47,8 +47,12 @@ knexFactory.define('role', 'roles', {
   assert.equal(role.userId, 1);
 
   try {
-    await(knexFactory.create('posts'))
+    await(knexFactory.create('posts'));
   } catch(err) {
     assert.equal(err, 'Unkown factory: posts');
   }
+
+  const builtUser = await knexFactory.build('user');
+  assert.equal(defaultUser.username, 'johndoe');
+  assert.equal(defaultUser.password, 'dynamic');
 })()

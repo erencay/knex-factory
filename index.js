@@ -14,14 +14,14 @@ extend(knexFactory, {
     factories[name] = { tableName, defaultAttributes };
   },
 
-  async create(factoryName, attributes) {
+  async build(factoryName, attributes) {
     const factory = factories[factoryName];
 
     if (!factory) {
       throw `Unkown factory: ${factoryName}`;
     }
 
-    const { tableName, defaultAttributes } = factory;
+    const { defaultAttributes } = factory;
     const insertData = {};
 
     extend(insertData, defaultAttributes, attributes);
@@ -39,6 +39,14 @@ extend(knexFactory, {
         insertData[k] = v;
       }
     };
+
+    return insertData;
+  },
+
+  async create(factoryName, attributes) {
+    const factory = factories[factoryName];
+    const insertData = await knexFactory.build(factoryName, attributes);
+    const { tableName } = factory;
 
     const [id] = await _knex(tableName).insert(insertData);
     const record = await _knex(tableName).where({ id }).first();
