@@ -3,13 +3,12 @@
 ### Install
 `npm i -D knex-factory`
 
-## Usage
+## Initialize
 
-Import package with knex:
+Require the package with knex
 
 ```
 const knex = require('knex');
-
 knex({ ... });
 
 require('knex-factory')(knex);
@@ -49,18 +48,22 @@ factory.define('avatar', 'avatars', {
 ...
 ```
 
-Use in your tests:
+### factory.build(factoryName, customData)
+Build method will not save record's itself but associations.
+
 ```
-...
-const user = await create('user', { level: 'admin' });
+const avatar = await create('avatar', { fileName: 'no_avatar.jpg' });
 
+expect(avatar.id).to.be(null);
+expect(avatar.userId).not.to.be(null);
+```
+
+
+### factory.create(factoryName, customData)
+Works like build method expect it will also create a persisted record of the factory instance.
+```
+const user = await build('user', { level: 'admin' });
+
+expect(user.id)not.to.eq(null);
 expect(user.level).to.eq('admin');
-
-...
-
-const avatar = await create('avatar', {
-  userId: currentUser.id,
-  fileName: 'no_avatar.jpg',
-});
-...
 ```
