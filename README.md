@@ -10,25 +10,33 @@ Import package with knex:
 ```
 const knex = require('knex');
 
-knex({
-  ...
-});
+knex({ ... });
 
-const factory = require('knex-factory')(knex);
+require('knex-factory')(knex);
 ```
 
-Define factories with default params:
+### factory.define(factoryName, tableName, validParams);
+When you define factories, you can use `functions` to generate dynamic data or return a promise;
+
+
+
+Define a user factory:
 
 ```
+const factory = require('knex-factory');
+
 factory.define('user', 'users', {
   level: 'member',
-  username: () => faker.internet.userName(),
-  email: () => faker.internet.email(),
-  hashedPassword: 'hashed-password-01234-abcdef',
-  nickname: () => faker.internet.userName(),
-  birthday: () => faker.date.past(),
-  accountStatus: 'approved',
+  username: 'testUser',
+  dynamicField() {
+    return new Date();
+  },
 });
+```
+
+Define an avatar factory with user:
+```
+const factory = require('knex-factory');
 
 factory.define('avatar', 'avatars', {
   async userId() {
@@ -44,7 +52,12 @@ factory.define('avatar', 'avatars', {
 Use in your tests:
 ```
 ...
-const currentUser = await create('user', { level: 'admin' });
+const user = await create('user', { level: 'admin' });
+
+expect(user.level).to.eq('admin');
+
+...
+
 const avatar = await create('avatar', {
   userId: currentUser.id,
   fileName: 'no_avatar.jpg',
