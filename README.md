@@ -52,7 +52,7 @@ factory.define('avatar', 'avatars', {
 Build method will not save record's itself but associations.
 
 ```
-const avatar = await create('avatar', { fileName: 'no_avatar.jpg' });
+const avatar = await build('avatar', { fileName: 'no_avatar.jpg' });
 
 expect(avatar.id).to.be(null);
 expect(avatar.userId).not.to.be(null);
@@ -62,7 +62,7 @@ expect(avatar.userId).not.to.be(null);
 ### factory.create(factoryName, customData)
 Works like build method expect it will also create a persisted record of the factory instance.
 ```
-const user = await build('user', { level: 'admin' });
+const user = await create('user', { level: 'admin' });
 
 expect(user.id)not.to.eq(null);
 expect(user.level).to.eq('admin');
