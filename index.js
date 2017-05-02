@@ -31,12 +31,12 @@ extend(knexFactory, {
 
       if (isFunction(v)) {
         insertData[k] = await v();
-
-        if (isObject(insertData[k]) && insertData[k].id) {
-          insertData[k] = insertData[k].id;
-        }
       } else {
-        insertData[k] = v;
+        insertData[k] = await v;
+      }
+
+      if (isObject(insertData[k]) && insertData[k].id) {
+        insertData[k] = insertData[k].id;
       }
     };
 
