@@ -64,6 +64,6 @@ Works like build method expect it will also create a persisted record of the fac
 ```
 const user = await create('user', { level: 'admin' });
 
-expect(user.id)not.to.eq(null);
+expect(user.id).not.to.eq(null);
 expect(user.level).to.eq('admin');
 ```
