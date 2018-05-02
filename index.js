@@ -48,8 +48,7 @@ extend(knexFactory, {
     const insertData = await knexFactory.build(factoryName, attributes);
     const { tableName } = factory;
 
-    const [id] = await _knex(tableName).insert(insertData);
-    const record = await _knex(tableName).where({ id }).first();
+    const record = await _knex(tableName).insert(insertData).returning('*');
 
     return record;
   },
