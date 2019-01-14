@@ -21,8 +21,11 @@ extend(knexFactory, {
       throw `Unkown factory: ${factoryName}`;
     }
 
-    const { defaultAttributes } = factory;
+    let { defaultAttributes } = factory;
     const insertData = {};
+    
+    if( 'function' === typeof defaultAttributes )
+      defaultAttributes = await defaultAttributes();
 
     extend(insertData, defaultAttributes, attributes);
 
