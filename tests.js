@@ -31,6 +31,13 @@ knexFactory.define('role', 'roles', {
   },
 });
 
+knexFactory.define('post', 'posts', () => {
+  return {
+    title: 'post title',
+    content: 'post content'
+  };
+});
+
 (async function () {
   const defaultUser = await knexFactory.create('user');
   assert.equal(defaultUser.username, 'johndoe');
@@ -55,4 +62,8 @@ knexFactory.define('role', 'roles', {
   const builtUser = await knexFactory.build('user');
   assert.equal(defaultUser.username, 'johndoe');
   assert.equal(defaultUser.password, 'dynamic');
+
+  const defaultPost = await knexFactory.create('post');
+  assert.equal(defaultPost.title, 'post title');
+  assert.equal(defaultPost.content, 'post content');
 })()
