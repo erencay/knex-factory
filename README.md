@@ -67,3 +67,13 @@ const user = await create('user', { level: 'admin' });
 expect(user.id).not.to.eq(null);
 expect(user.level).to.eq('admin');
 ```
+
+### factory.delete(factoryName, where)
+This method will delete records of the factory instance, given the where conditions;
+```
+await delete('user', { level: 'admin' });
+
+const user = await create('user', { level: 'admin' });
+
+expect(user).to.eq(null);
+```

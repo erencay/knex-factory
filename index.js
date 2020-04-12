@@ -55,6 +55,15 @@ extend(knexFactory, {
 
     return head(record);
   },
+
+  async delete(factoryName, where) {
+    const factory = factories[factoryName];
+    const { tableName } = factory;
+
+    const record = await _knex(tableName).where(where).del();
+    return head(record);
+  },
+  
 });
 
 module.exports = knexFactory;
